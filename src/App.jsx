@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { RecoilRoot } from 'recoil';
 
 import '@/sb.min.css';
+
+import { TodosProvider } from '@/state/TodosState';
 
 import { GlobalStyle } from '@/styles/global';
 
@@ -14,14 +15,14 @@ const Heading = styled.h1`
 export const App = () => {
   return (
     <div id="app">
-      <RecoilRoot>
-        <GlobalStyle />
-        <Wrapper>
-          <h1>React.js TODO</h1>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>React.js TODO</h1>
+        <TodosProvider>
           <Controls />
           <TodoList />
-        </Wrapper>
-      </RecoilRoot>
+        </TodosProvider>
+      </Wrapper>
     </div>
   );
 };

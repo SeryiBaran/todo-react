@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
 
 import { generateKey } from '@/utils';
 
-import { TodosState } from '@/state/TodosState';
+import { useTodosState } from '@/state/TodosState';
 
-import { Todo } from '@/components';
+import { TodoItem } from './TodoItem';
 
 const StyledTodoList = styled.div`
   text-align: left;
@@ -15,11 +14,12 @@ const StyledTodoList = styled.div`
 `;
 
 export const TodoList = () => {
-  const [TSInstance, setTSInstance] = useRecoilState(TodosState);
+  const [todosState, setTodosState] = useTodosState();
+
   return (
     <StyledTodoList>
-      {[...TSInstance.todos].reverse().map(todo => (
-        <Todo key={generateKey()} todoId={todo[0]} content={todo[1]} />
+      {[...todosState.todos].reverse().map(todo => (
+        <TodoItem key={generateKey()} todoId={todo[0]} content={todo[1]} />
       ))}
     </StyledTodoList>
   );

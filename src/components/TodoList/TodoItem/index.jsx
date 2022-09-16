@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
 
-import { TodosState } from '@/state/TodosState';
+import { useTodosState } from '@/state/TodosState';
 
 const StyledTodo = styled.div`
   padding: 1rem;
@@ -21,14 +20,14 @@ const TodoRemoveBtn = styled.button`
   height: 3rem;
 `;
 
-export const Todo = ({ content, todoId }) => {
-  const [TSInstance, setTSInstance] = useRecoilState(TodosState);
+export const TodoItem = ({ content, todoId }) => {
+  const [todosState, setTodosState] = useTodosState();
 
   const removeTodo = () => {
-    const index = TSInstance.todos.map(e => e[0]).indexOf(todoId);
-    const todosCopy = [...TSInstance.todos];
+    const index = todosState.todos.map(e => e[0]).indexOf(todoId);
+    const todosCopy = [...todosState.todos];
     todosCopy.splice(index, 1);
-    setTSInstance(state => ({
+    setTodosState(state => ({
       todos: todosCopy,
     }));
   };
