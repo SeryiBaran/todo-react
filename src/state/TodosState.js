@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist({
 });
 
 export const defaultValue = {
-  todos: [["id_LOL_kjdghuikre", "Тестовое ToDo"]],
+  todos: [],
 };
 
 export const TodosState = atom({
