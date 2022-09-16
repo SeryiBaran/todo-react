@@ -18,7 +18,7 @@ export const TodoList = () => {
   const [TSInstance, setTSInstance] = useRecoilState(TodosState);
   return (
     <StyledTodoList>
-      {TSInstance.todos.map(todo => (
+      {[...TSInstance.todos].reverse().map(todo => (
         <Todo key={generateKey()} todoId={todo[0]} content={todo[1]} />
       ))}
     </StyledTodoList>
