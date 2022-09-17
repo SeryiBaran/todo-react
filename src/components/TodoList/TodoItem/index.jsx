@@ -15,26 +15,30 @@ const TodoText = styled.p`
   word-wrap: break-word;
 `;
 
-const TodoRemoveBtn = styled.button`
+const TodoBtn = styled.button`
   background-color: #e8e8e8;
   height: 3rem;
 `;
 
+const removeTodo = (todosState, setTodosState, todoId) => {
+  const todosCopy = todosState.todos;
+  const index = todosCopy.findIndex(todo => todo[0] === todoId);
+  todosCopy.splice(index, 1);
+  setTodosState(state => ({
+    todos: todosCopy,
+  }));
+};
+
 export const TodoItem = ({ content, todoId }) => {
   const [todosState, setTodosState] = useTodosState();
 
-  const removeTodo = () => {
-    const todosCopy = todosState.todos;
-    const index = todosCopy.findIndex(todo => todo[0] === todoId);
-    todosCopy.splice(index, 1);
-    setTodosState(state => ({
-      todos: todosCopy,
-    }));
-  };
-
   return (
     <StyledTodo>
-      <TodoRemoveBtn onClick={removeTodo}>Удалить</TodoRemoveBtn>
+      <TodoBtn
+        onClick={() => removeTodo(todosState, setTodosState, todoId)}
+      >
+        Удалить
+      </TodoBtn>
       <TodoText>{content}</TodoText>
     </StyledTodo>
   );
