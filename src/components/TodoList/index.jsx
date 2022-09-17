@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { useStore } from "effector-react";
 
 import { generateKey } from '@/utils';
 
-import { useTodosState } from '@/state/TodosState';
+import { $todos, addTodo } from '@/state/TodosState';
 
 import { TodoItem } from './TodoItem';
 
@@ -14,11 +15,11 @@ const StyledTodoList = styled.div`
 `;
 
 export const TodoList = () => {
-  const [todosState, setTodosState] = useTodosState();
+  const todos = useStore($todos);
 
   return (
     <StyledTodoList>
-      {[...todosState.todos].reverse().map(todo => (
+      {[...todos].reverse().map(todo => (
         <TodoItem key={generateKey()} todoId={todo[0]} content={todo[1]} />
       ))}
     </StyledTodoList>

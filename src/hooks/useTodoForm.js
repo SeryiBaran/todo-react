@@ -1,12 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { generateKey, todoContentIsValid } from '@/utils';
+import { todoContentIsValid } from '@/utils';
 
-import { useTodosState } from '@/state/TodosState';
+import { $todos, addTodo } from '@/state/TodosState';
 
 export const useTodoForm = () => {
-  const [todosState, setTodosState] = useTodosState();
-
   const handleSubmit = useMemo(() => evt => {
     evt.preventDefault();
 
@@ -16,11 +14,7 @@ export const useTodoForm = () => {
 
     const inputValue = form.text.value;
 
-    setTodosState(state => {
-      return {
-        todos: [...state.todos, [generateKey(), inputValue]],
-      };
-    });
+    addTodo(inputValue);
 
     form.text.value = '';
   });

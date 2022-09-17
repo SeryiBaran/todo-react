@@ -1,26 +1,27 @@
-import { useState, createContext, useContext, useMemo, useEffect } from 'react';
+import { createStore, createEvent } from 'effector';
+import { persist } from 'effector-storage/local'
 
-export const defaultValue = JSON.parse(localStorage.getItem('todos')) || {
-  todos: [],
-};
+import { generateKey } from '@/utils';
 
-export const TodosContext = createContext();
+export const defaultValue = [];
 
-export const TodosProvider = props => {
-  const [todos, setTodos] = useState(defaultValue);
-  const value = useMemo(() => [todos, setTodos], [todos]);
+export const $todos = createStore(defaultValue);
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
+persist({ store: $todos, key: 'todos' })
 
-  return <TodosContext.Provider value={value} {...props} />;
-};
+export const addTodo = createEvent();
+export const removeTodo = createEvent();
 
-export const useTodosState = () => {
-  const context = useContext(TodosContext);
-  if (!context) {
-    throw new Error("useTodosState must be used within a TodosProvider");
-  }
-  return context;
-};
+$todos.on(removeTodo, (state, id) => {
+  const copy = [...state];
+  const index = copy.findIndex(todo => todo[0] === id);
+  copy.splice(index, 1);
+  console.log(copy);
+  return copy;
+});
+
+$todos.on(addTodo, (state, content) => {
+  return [...state, [generateKey(), content]];
+});
+
+$todos.watch(console.log);

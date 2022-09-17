@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useTodosState } from '@/state/TodosState';
+import { removeTodo } from '@/state/TodosState';
 
 const StyledTodo = styled.div`
   padding: 1rem;
@@ -20,25 +20,10 @@ const TodoBtn = styled.button`
   height: 3rem;
 `;
 
-const removeTodo = (todosState, setTodosState, todoId) => {
-  const todosCopy = todosState.todos;
-  const index = todosCopy.findIndex(todo => todo[0] === todoId);
-  todosCopy.splice(index, 1);
-  setTodosState(state => ({
-    todos: todosCopy,
-  }));
-};
-
 export const TodoItem = ({ content, todoId }) => {
-  const [todosState, setTodosState] = useTodosState();
-
   return (
     <StyledTodo>
-      <TodoBtn
-        onClick={() => removeTodo(todosState, setTodosState, todoId)}
-      >
-        Удалить
-      </TodoBtn>
+      <TodoBtn onClick={() => removeTodo(todoId)}>Удалить</TodoBtn>
       <TodoText>{content}</TodoText>
     </StyledTodo>
   );
