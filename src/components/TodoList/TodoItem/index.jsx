@@ -24,9 +24,11 @@ export const TodoItem = ({ content, todoId }) => {
   const [todosState, setTodosState] = useTodosState();
 
   const removeTodo = () => {
-    const todosCopyWithoutId = todosState.todos.filter(todo => todo[0] !== todoId);
+    const todosCopy = todosState.todos;
+    const index = todosCopy.findIndex(todo => todo[0] === todoId);
+    todosCopy.splice(index, 1);
     setTodosState(state => ({
-      todos: todosCopyWithoutId,
+      todos: todosCopy,
     }));
   };
 
