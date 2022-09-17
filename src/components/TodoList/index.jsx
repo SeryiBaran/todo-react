@@ -20,7 +20,7 @@ export const TodoList = () => {
   return (
     <StyledTodoList>
       {[...todos].reverse().map(todo => (
-        <TodoItem key={generateKey()} todoId={todo[0]} content={todo[1]} />
+        <TodoItem key={generateKey()} todoId={todo.id} content={todo.content} />
       ))}
     </StyledTodoList>
   );

@@ -5,9 +5,8 @@ import { todoContentIsValid } from '@/utils';
 import { $todos, addTodo } from '@/state/TodosState';
 
 export const useTodoForm = () => {
-  const handleSubmit = useMemo(() => evt => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-
     const form = evt.target;
 
     if (!todoContentIsValid(form.text.value)) return;
@@ -17,7 +16,7 @@ export const useTodoForm = () => {
     addTodo(inputValue);
 
     form.text.value = '';
-  });
+  };
 
   return handleSubmit;
 };
