@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useTodoForm } from '@/hooks';
@@ -8,11 +8,15 @@ import { Submit } from './Submit';
 import { Input } from './Input';
 
 export const Controls = () => {
-  const handleSubmit = useTodoForm();
+  const [handleSubmit, inputValue, setInputValue] = useTodoForm();
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Input type="text" name="text" />
+      <Input
+        type="text"
+        value={inputValue}
+        onChange={evt => setInputValue(evt.target.value)}
+      />
       <Submit>Добавить</Submit>
     </Form>
   );

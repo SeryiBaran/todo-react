@@ -1,22 +1,24 @@
-import { useMemo } from 'react';
+import { useCallback, useState } from 'react';
 
 import { todoContentIsValid } from '@/utils';
 
 import { $todos, addTodo } from '@/state/TodosState';
 
 export const useTodoForm = () => {
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const form = evt.target;
+  const [inputValue, setInputValue] = useState('');
 
-    if (!todoContentIsValid(form.text.value)) return;
+  const handleSubmit = useCallback(
+    evt => {
+      evt.preventDefault();
 
-    const inputValue = form.text.value;
+      if (!todoContentIsValid(inputValue)) return;
 
-    addTodo(inputValue);
+      addTodo(inputValue);
 
-    form.text.value = '';
-  };
+      setInputValue('');
+    },
+    [inputValue],
+  );
 
-  return handleSubmit;
+  return [handleSubmit, inputValue, setInputValue];
 };
