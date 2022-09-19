@@ -3,7 +3,7 @@ import { useStore } from "effector-react";
 
 import { generateKey } from '@/utils';
 
-import { $todos, addTodo } from '@/state/TodosState';
+import { $todos } from '@/state/TodosState';
 
 import { TodoItem } from './TodoItem';
 
