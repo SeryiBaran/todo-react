@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { todoContentIsValid } from '@/utils';
 
-import { $todos, addTodo } from '@/state/TodosState';
+import { addTodo } from '@/state/TodosState';
 
 import { Form } from './Form';
 import { Submit } from './Submit';
