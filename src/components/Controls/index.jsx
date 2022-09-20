@@ -4,7 +4,7 @@ import { useUnit } from 'effector-react';
 
 import { todoContentIsValid } from '@/utils';
 
-import { todoAdded } from '@/state/TodosState';
+import { todoAdded } from '@/state';
 
 import { Form } from './Form';
 import { Submit } from './Submit';
