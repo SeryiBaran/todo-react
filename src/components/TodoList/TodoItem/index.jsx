@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { useUnit } from "effector-react";
 
-import { removeTodo } from '@/state/TodosState';
+import { todoRemoved } from '@/state';
 
 const StyledTodo = styled.div`
   padding: 1rem;
@@ -21,6 +22,8 @@ const TodoBtn = styled.button`
 `;
 
 export const TodoItem = ({ content, todoId }) => {
+  const removeTodo = useUnit(todoRemoved)
+
   return (
     <StyledTodo>
       <TodoBtn onClick={() => removeTodo(todoId)}>Удалить</TodoBtn>

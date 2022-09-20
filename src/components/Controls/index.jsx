@@ -1,15 +1,17 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useUnit } from 'effector-react';
 
 import { todoContentIsValid } from '@/utils';
 
-import { addTodo } from '@/state/TodosState';
+import { todoAdded } from '@/state/TodosState';
 
 import { Form } from './Form';
 import { Submit } from './Submit';
 import { Input } from './Input';
 
 export const Controls = () => {
+  const addTodo = useUnit(todoAdded);
   const [inputValue, setInputValue] = useState('');
 
   const handleSubmit = useCallback(
