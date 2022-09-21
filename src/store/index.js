@@ -1,7 +1,5 @@
-import { createStore, createEvent, createApi } from 'effector';
+import { createStore, createEvent } from 'effector';
 import { persist } from 'effector-storage/local';
-
-import { useId } from 'react';
 
 import { generateKey } from '@/utils';
 
@@ -11,12 +9,18 @@ export const $todos = createStore(defaultValue);
 
 persist({ store: $todos, key: 'todos' });
 
-export const api = createApi($todos, {
-  removeTodo: (state, id) => {
-    const copy = [...state];
-    const index = copy.findIndex(todo => todo.id === id);
-    copy.splice(index, 1);
-    return copy;
-  },
-  addTodo: (state, content) => [...state, { id: generateKey(), content }],
+export const todoAdded_ = createEvent();
+export const todoRemoved = createEvent();
+
+$todos.on(todoAddedWithId, (state, todo) => [...state, todo]);
+$todos.on(todoRemoved, (state, id) => {
+  const copy = [...state];
+  const index = copy.findIndex(todo => todo.id === id);
+  copy.splice(index, 1);
+  return copy;
 });
+
+export const todoAdded = todoAddedWithId.prepend(content => ({
+  id: generateKey(),
+  content,
+}));
