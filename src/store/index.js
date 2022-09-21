@@ -1,7 +1,7 @@
 import { createStore, createEvent } from 'effector';
 import { persist } from 'effector-storage/local';
 
-import { generateKey } from '@/utils';
+import { generateKey, searchTodoById } from '@/utils';
 
 // Состояние по умолчанию
 export const defaultTodos = [];
@@ -16,10 +16,9 @@ const onTodoAddedWithId = (state, todo) => [...state, todo];
 
 // Event Listener: при удалении todo (передаётся id)
 const onTodoRemoved = (state, id) => {
-  // Копируем состояние, дабы не мутировать
   const copy = [...state];
-  // Ищем индекс todo в массиве и удаляем
-  const index = copy.findIndex(todo => todo.id === id);
+
+  const index = searchTodoById(copy, id);
   copy.splice(index, 1);
 
   return copy;
@@ -27,10 +26,9 @@ const onTodoRemoved = (state, id) => {
 
 // Event Listener: при изменении todo (передаётся id todo и новый контент)
 const onTodoEdited = (state, { id, newContent }) => {
-  // Копируем состояние, дабы не мутировать
   const copy = [...state];
-  // Ищем индекс todo в массиве и заменяем контент
-  const index = copy.findIndex(todo => todo.id === id);
+
+  const index = searchTodoById(copy, id);
   copy[index].content = newContent;
 
   return copy;

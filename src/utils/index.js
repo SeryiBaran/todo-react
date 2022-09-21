@@ -6,3 +6,6 @@ export const todoContentIsValid = content =>
 export const generateKey = prefix => {
   return `${prefix || 'ID'}_${new Date().getTime()}_${Math.random()}`;
 };
+
+// Поиск индекса todo в массиве по значению id
+export const searchTodoById = (todoArray, id) => todoArray.findIndex(todo => todo.id === id);
