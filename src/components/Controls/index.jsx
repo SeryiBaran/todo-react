@@ -19,16 +19,13 @@ export const Controls = () => {
   // Обёрнуто в useCallback с зависимостью "inputValue", чтобы функция не пере-создавалась лишний раз
   const handleSubmit = useCallback(
     evt => {
-      // Отмена стандартной отправки формы (с перезагрузкой)
       evt.preventDefault();
 
       // Валидация значения инпута
       if (!todoContentIsValid(inputValue)) return;
 
-      // Добавление todo в стор
       addTodo(inputValue);
 
-      // Очистка инпута
       setInputValue('');
     },
     [inputValue],

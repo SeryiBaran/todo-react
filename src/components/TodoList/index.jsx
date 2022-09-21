@@ -15,7 +15,6 @@ const StyledTodoList = styled.div`
 `;
 
 export const TodoList = () => {
-  // Использование стора в компоненте
   const todos = useStore($todos);
 
   return (
