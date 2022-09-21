@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useStore } from "effector-react";
+import { useStore } from 'effector-react';
 
 import { generateKey } from '@/utils';
 
-import { $todos } from '@/state';
+import { $todos } from '@/store';
 
 import { TodoItem } from './TodoItem';
 
