@@ -23,13 +23,16 @@ const TodoText = styled.pre`
 `;
 
 export const TodoItem = ({ content, todoId }) => {
+  // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
 
   const [isEdited, setIsEdited] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState(content);
 
+  // При нажатии кнопки "готово"
   const saveTodo = useCallback(() => {
+    // Переключение состояния "редактируется" и вызов ивента для сохранения
     setIsEdited(false);
     setTodo({ id: todoId, newContent: textAreaValue });
   }, [textAreaValue]);

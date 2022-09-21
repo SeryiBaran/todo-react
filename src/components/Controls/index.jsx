@@ -11,16 +11,24 @@ import { Submit } from './Submit';
 import { Input } from './Input';
 
 export const Controls = () => {
+  // "Переименование" событий в функции (чтобы было "addTodo(args)" вместо "todoAdded(args)")
   const addTodo = useUnit(todoAdded);
+
   const [inputValue, setInputValue] = useState('');
 
+  // Обёрнуто в useCallback с зависимостью "inputValue", чтобы функция не пере-создавалась лишний раз
   const handleSubmit = useCallback(
     evt => {
+      // Отмена стандартной отправки формы (с перезагрузкой)
       evt.preventDefault();
 
+      // Валидация значения инпута
       if (!todoContentIsValid(inputValue)) return;
 
+      // Добавление todo в стор
       addTodo(inputValue);
+
+      // Очистка инпута
       setInputValue('');
     },
     [inputValue],

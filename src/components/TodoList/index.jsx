@@ -15,10 +15,13 @@ const StyledTodoList = styled.div`
 `;
 
 export const TodoList = () => {
+  // Использование стора в компоненте
   const todos = useStore($todos);
 
   return (
     <StyledTodoList>
+      {/* Использован rest оператор, дабы не мутировать состояние */}
+      {/* Использован метод .reverse, чтобы тудушки шли снизу вверх */}
       {[...todos].reverse().map(todo => (
         <TodoItem key={generateKey()} todoId={todo.id} content={todo.content} />
       ))}
