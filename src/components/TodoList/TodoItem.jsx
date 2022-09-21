@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
@@ -29,26 +29,18 @@ export const TodoItem = ({ content, todoId }) => {
   const [isEdited, setIsEdited] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState(content);
 
+  const saveTodo = useCallback(() => {
+    setIsEdited(false);
+    setTodo({ id: todoId, newContent: textAreaValue });
+  }, [textAreaValue]);
+
   return (
     <StyledTodo>
       <BlockButton onClick={() => removeTodo(todoId)}>Удалить</BlockButton>
       {!!isEdited ? (
-        <BlockButton
-          onClick={() => {
-            setIsEdited(false);
-            setTodo({ id: todoId, newContent: textAreaValue });
-          }}
-        >
-          Готово
-        </BlockButton>
+        <BlockButton onClick={saveTodo}>Готово</BlockButton>
       ) : (
-        <BlockButton
-          onClick={() => {
-            setIsEdited(true);
-          }}
-        >
-          Изменить
-        </BlockButton>
+        <BlockButton onClick={() => setIsEdited(true)}>Изменить</BlockButton>
       )}
       {!!isEdited ? (
         <TextArea
