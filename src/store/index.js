@@ -36,7 +36,7 @@ const onTodoEdited = (state, { id, newContent }) => {
 
 // Prepend: генерация id для нового todo (вынесено из ивента onTodoAddedWithId)
 const prependTodoAddedWithId = content => ({
-  id: generateKey(),
+  id: generateKey("TODO"),
   content,
 });
 
