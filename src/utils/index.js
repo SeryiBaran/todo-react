@@ -1,6 +1,5 @@
 // Проверка валидности содержимого для контента в todo
-export const todoContentIsValid = content =>
-  !(content.trim() === "");
+export const todoContentIsValid = content => !!content.trim();
 
 // Генерация рандомного ID, в формате "prefix_рандомнаяСтрокаИзNanoID"
 export const generateId = () => crypto.randomUUID();
