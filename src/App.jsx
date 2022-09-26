@@ -1,14 +1,12 @@
 import styled from 'styled-components';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import '@/sb.min.css';
+import '@/bootstrap.min.css';
 
 import { GlobalStyle } from '@/styles/global';
 
 import { Wrapper, Controls, TodoList } from '@/components';
-
-const Heading = styled.h1`
-  text-align: center;
-`;
 
 export const App = () => {
   return (

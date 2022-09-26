@@ -2,24 +2,18 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
+import { Button, Card } from 'react-bootstrap';
+
 import { todoRemoved, todoEdited } from '@/store';
 
-import { BlockButton, TextArea } from '@/components';
-
-const StyledTodo = styled.div`
-  padding: 1rem;
-  background-color: #d4d4d4;
-  display: flex;
-  gap: 1rem;
-  flex-direction: column;
-  border: 1px solid #777;
-`;
+import { TextArea } from '@/components';
 
 const TodoText = styled.pre`
   word-wrap: break-word;
   white-space: pre-wrap;
   font: unset;
   padding: 0.5rem;
+  margin: 0;
 `;
 
 export const TodoItem = ({ content, todoId }) => {
@@ -38,21 +32,28 @@ export const TodoItem = ({ content, todoId }) => {
   }, [textAreaValue]);
 
   return (
-    <StyledTodo>
-      <BlockButton onClick={() => removeTodo(todoId)}>Удалить</BlockButton>
-      {!!isEdited ? (
-        <BlockButton onClick={saveTodo}>Готово</BlockButton>
-      ) : (
-        <BlockButton onClick={() => setIsEdited(true)}>Изменить</BlockButton>
-      )}
-      {!!isEdited ? (
-        <TextArea
-          value={textAreaValue}
-          onChange={evt => setTextAreaValue(evt.target.value)}
-        />
-      ) : (
-        <TodoText>{content}</TodoText>
-      )}
-    </StyledTodo>
+    <Card className="bg-light">
+      <Card.Body className="d-grid gap-2">
+        <div className="d-grid gap-2">
+          <Button variant="danger" onClick={() => removeTodo(todoId)}>
+            Завершено
+          </Button>
+          <Button
+            onClick={() => setIsEdited(true)}
+            {...(!!isEdited && { variant: 'success', onClick: saveTodo })}
+          >
+            {!!isEdited ? 'Готово' : 'Изменить'}
+          </Button>
+        </div>
+        {!!isEdited ? (
+          <TextArea
+            value={textAreaValue}
+            onChange={evt => setTextAreaValue(evt.target.value)}
+          />
+        ) : (
+          <TodoText>{content}</TodoText>
+        )}
+      </Card.Body>
+    </Card>
   );
 };

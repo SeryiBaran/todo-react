@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div.attrs({
   className: 'wrapper',
 })`
-  max-width: 40rem;
+  max-width: 35rem;
   margin: 0 auto;
   padding: 1rem;
   text-align: center;

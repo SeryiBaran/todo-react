@@ -2,13 +2,11 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
+import { Button, Form } from 'react-bootstrap';
+
 import { todoContentIsValid } from '@/utils';
 
 import { todoAdded } from '@/store';
-
-import { Form } from './Form';
-import { Submit } from './Submit';
-import { Input } from './Input';
 
 export const Controls = () => {
   // "Переименование" событий в функции (чтобы было "addTodo(args)" вместо "todoAdded(args)")
@@ -32,13 +30,19 @@ export const Controls = () => {
   );
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
+    <Form
+      onSubmit={handleSubmit}
+      className="d-flex gap-2 flex-column flex-sm-row"
+    >
+      <Form.Control
         type="text"
         value={inputValue}
         onChange={evt => setInputValue(evt.target.value)}
+        className=""
       />
-      <Submit>Добавить</Submit>
+      <Button type="submit" className="">
+        Добавить
+      </Button>
     </Form>
   );
 };

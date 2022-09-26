@@ -6,4 +6,6 @@ export const TextArea = styled.textarea`
   resize: vertical;
   line-height: unset;
   padding: 0.5rem;
+  width: 100%;
+  border: 0;
 `;
