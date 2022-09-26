@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import '@/bootstrap.min.css';
+// Тема Bootswatch Lumen для Bootstrap (https://bootswatch.com/lumen/)
+import '@/bootstrap-lumen.min.css';
 
 import { GlobalStyle } from '@/styles/global';
 
