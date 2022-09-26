@@ -1,7 +1,7 @@
 import { createStore, createEvent } from 'effector';
 import { persist } from 'effector-storage/local';
 
-import { generateKey, searchTodoById } from '@/utils';
+import { generateId, searchTodoById } from '@/utils';
 
 // Состояние по умолчанию
 export const defaultTodos = [];
@@ -29,7 +29,7 @@ const onTodoEdited = (state, { id, newContent }) => {
 
 // Prepend: генерация id для нового todo (вынесено из ивента onTodoAddedWithId)
 const prependTodoAddedWithId = content => ({
-  id: generateKey("TODO"),
+  id: generateId(),
   content,
 });
 
