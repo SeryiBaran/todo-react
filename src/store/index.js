@@ -15,14 +15,7 @@ persist({ store: $todos, key: 'todos' });
 const onTodoAddedWithId = (state, todo) => [...state, todo];
 
 // Event Listener: при удалении todo (передаётся id)
-const onTodoRemoved = (state, id) => {
-  const copy = [...state];
-
-  const index = searchTodoById(copy, id);
-  copy.splice(index, 1);
-
-  return copy;
-};
+const onTodoRemoved = (state, id) => state.filter(todo => todo.id !== id);
 
 // Event Listener: при изменении todo (передаётся id todo и новый контент)
 const onTodoEdited = (state, { id, newContent }) => {
