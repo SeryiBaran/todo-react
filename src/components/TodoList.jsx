@@ -20,7 +20,7 @@ export const TodoList = () => {
   const items = [...todos]
     .reverse()
     .map(todo => (
-      <TodoItem key={todo.id} todoId={todo.id} content={todo.content} />
+      <TodoItem key={todo.id} todo={todo} />
     ));
 
   return <StyledTodoList>{items}</StyledTodoList>;

@@ -16,7 +16,7 @@ const TodoText = styled.pre`
   margin: 0;
 `;
 
-export const TodoItem = ({ content, todoId }) => {
+export const TodoItem = ({ todo: { content, id } }) => {
   // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
@@ -28,14 +28,14 @@ export const TodoItem = ({ content, todoId }) => {
   const saveTodo = useCallback(() => {
     // Переключение состояния "редактируется" и вызов ивента для сохранения
     setIsEdited(false);
-    setTodo({ id: todoId, newContent: textAreaValue });
+    setTodo({ id, newContent: textAreaValue });
   }, [textAreaValue]);
 
   return (
     <Card className="bg-light">
       <Card.Body className="d-grid gap-2">
         <div className="d-grid gap-2">
-          <Button variant="danger" onClick={() => removeTodo(todoId)}>
+          <Button variant="danger" onClick={() => removeTodo(id)}>
             Завершено
           </Button>
           <Button
