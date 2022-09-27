@@ -15,13 +15,13 @@ const StyledTodoList = styled.div`
 export const TodoList = () => {
   const todos = useStore($todos);
 
-  return (
-    <StyledTodoList>
-      {/* Использован rest оператор, дабы не мутировать состояние */}
-      {/* Использован метод .reverse, чтобы тудушки шли снизу вверх */}
-      {[...todos].reverse().map(todo => (
-        <TodoItem key={todo.id} todoId={todo.id} content={todo.content} />
-      ))}
-    </StyledTodoList>
-  );
+  // Использован rest оператор, дабы не мутировать состояние
+  // Использован метод .reverse, чтобы тудушки шли снизу вверх
+  const items = [...todos]
+    .reverse()
+    .map(todo => (
+      <TodoItem key={todo.id} todoId={todo.id} content={todo.content} />
+    ));
+
+  return <StyledTodoList>{items}</StyledTodoList>;
 };
