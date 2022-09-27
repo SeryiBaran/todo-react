@@ -6,7 +6,7 @@ import { ITodo, ITodosStore } from '@/store';
 export const todoContentIsValid = (content: ITodo['content']) =>
   !!content.trim();
 
-// Генерация ID (для ToDo и react key)
+// Генерация ID
 export const generateId = () => uuidv4();
 
 // Поиск индекса todo в массиве по значению id

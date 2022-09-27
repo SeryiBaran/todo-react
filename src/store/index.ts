@@ -3,6 +3,15 @@ import { persist } from 'effector-storage/local';
 
 import { generateId, searchTodoById } from '@/utils';
 
+/*
+Схема (для тупеньких)
+
+{
+  id: "<UUID>",
+  content: "<CONTENT>",
+}
+*/
+
 export interface ITodo {
   id: string;
   content: string;
