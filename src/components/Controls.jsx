@@ -22,7 +22,7 @@ export const Controls = () => {
       // Валидация значения инпута
       if (!todoContentIsValid(inputValue)) return;
 
-      addTodo(inputValue);
+      addTodo({ content: inputValue });
 
       setInputValue('');
     },

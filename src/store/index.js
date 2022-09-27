@@ -28,9 +28,9 @@ const onTodoEdited = (state, { id, newContent }) => {
 };
 
 // Prepend: генерация id для нового todo (вынесено из ивента onTodoAddedWithId)
-const prependTodoAddedWithId = content => ({
+const prependTodoAddedWithId = settings => ({
   id: generateId(),
-  content,
+  ...settings,
 });
 
 // Создание ивентов
@@ -47,4 +47,4 @@ $todos
   .on(todoAddedWithId, onTodoAddedWithId)
   .on(todoRemoved, onTodoRemoved)
   .on(todoEdited, onTodoEdited)
-  .reset(resetted)
+  .reset(resetted);
