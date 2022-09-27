@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
@@ -16,7 +16,7 @@ export const Controls = () => {
 
   // Обёрнуто в useCallback с зависимостью "inputValue", чтобы функция не пере-создавалась лишний раз
   const handleSubmit = useCallback(
-    evt => {
+    (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
 
       // Валидация значения инпута
