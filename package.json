@@ -6,15 +6,36 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ./src/**/*",
+    "lint:fix": "eslint ./src/**/* --fix",
+    "format": "prettier --write ./src/**/*",
+    "csssort": "postcss ./src/**/*.scss --replace --config package.json --no-map",
+    "cssprefix": "postcss ./dist/**/*.css --replace --use autoprefixer --config package.json --no-map",
+    "prod": "npm run csssort && npm run build && npm run cssprefix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "autoprefixer": "^10.4.12",
     "bootstrap": "^5.2.1",
     "classnames": "^2.3.2",
+    "css-declaration-sorter": "^6.3.1",
     "effector": "^22.3.0",
     "effector-react": "^22.2.0",
     "effector-storage": "^5.0.1",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.8",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
+    "postcss-scss": "^4.0.5",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
@@ -28,5 +49,14 @@
     "@vitejs/plugin-react": "^2.1.0",
     "typescript": "^4.6.4",
     "vite": "^3.1.0"
+  },
+  "postcss": {
+    "syntax": "postcss-scss",
+    "map": false,
+    "plugins": {
+      "css-declaration-sorter": {
+        "order": "smacss"
+      }
+    }
   }
 }

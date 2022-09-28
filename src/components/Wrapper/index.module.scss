@@ -1,9 +1,9 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
   max-width: 35rem;
   margin: 0 auto;
   padding: 1rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
   gap: 3rem;
+  text-align: center;
 }

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useUnit } from 'effector-react';
 
 import { Button, Card, Form } from 'react-bootstrap';
@@ -37,10 +37,10 @@ export const TodoItem = ({ todo }: ITodoItem) => {
             onClick={() => setIsEdited(true)}
             {...(!!isEdited && { variant: 'success', onClick: saveTodo })}
           >
-            {!!isEdited ? 'Готово' : 'Изменить'}
+            {isEdited ? 'Готово' : 'Изменить'}
           </Button>
         </div>
-        {!!isEdited ? (
+        {isEdited ? (
           <Form.Control
             as="textarea"
             value={textAreaValue}
