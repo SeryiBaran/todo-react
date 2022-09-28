@@ -12,7 +12,7 @@
     "format": "prettier --write ./src/**/*",
     "csssort": "postcss ./src/**/*.scss --replace --config package.json --no-map",
     "cssprefix": "postcss ./dist/**/*.css --replace --use autoprefixer --config package.json --no-map",
-    "prod": "npm run csssort && npm run build && npm run cssprefix",
+    "prod": "npm run lint && npm run csssort && npm run build && npm run cssprefix",
     "prepare": "husky install"
   },
   "dependencies": {
