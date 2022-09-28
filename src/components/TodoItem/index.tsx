@@ -5,7 +5,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 
 import { todoRemoved, todoEdited, ITodo } from '@/store';
 
-import styles from './index.module.scss'
+import styles from './index.module.scss';
 
 interface ITodoItem {
   todo: ITodo;
@@ -20,11 +20,11 @@ export const TodoItem = ({ todo }: ITodoItem) => {
   const [textAreaValue, setTextAreaValue] = useState(todo.content);
 
   // При нажатии кнопки "готово"
-  const saveTodo = useCallback(() => {
+  const saveTodo = () => {
     // Переключение состояния "редактируется" и вызов ивента для сохранения
     setIsEdited(false);
     setTodo({ id: todo.id, content: textAreaValue });
-  }, [textAreaValue]);
+  };
 
   return (
     <Card className="bg-light">
