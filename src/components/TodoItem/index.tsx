@@ -1,24 +1,15 @@
 import { useState, useCallback } from 'react';
-import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 
 import { todoRemoved, todoEdited, ITodo } from '@/store';
 
-import { TextArea } from '@/components';
+import styles from './index.module.scss'
 
 interface ITodoItem {
   todo: ITodo;
 }
-
-const TodoText = styled.pre`
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  font: unset;
-  padding: 0.5rem;
-  margin: 0;
-`;
 
 export const TodoItem = ({ todo }: ITodoItem) => {
   // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
@@ -50,12 +41,13 @@ export const TodoItem = ({ todo }: ITodoItem) => {
           </Button>
         </div>
         {!!isEdited ? (
-          <TextArea
+          <Form.Control
+            as="textarea"
             value={textAreaValue}
             onChange={evt => setTextAreaValue(evt.target.value)}
           />
         ) : (
-          <TodoText>{todo.content}</TodoText>
+          <pre className={styles.contentPre}>{todo.content}</pre>
         )}
       </Card.Body>
     </Card>

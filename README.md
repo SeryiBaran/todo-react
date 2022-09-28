@@ -8,4 +8,4 @@
 - [Bootstrap](http://getbootstrap.com/)
 - [React.js](https://reactjs.org/)
 - [Effector](https://effector.dev/)
-- [Styled Components](https://styled-components.com/)
+- [Sass/SCSS](https://sass-lang.com/)

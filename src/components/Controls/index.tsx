@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
 import { useUnit } from 'effector-react';
 
 import { Button, Form } from 'react-bootstrap';
