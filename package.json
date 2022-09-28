@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "@types/styled-components": "^5.1.26",
     "bootstrap": "^5.2.1",
     "classnames": "^2.3.2",
     "effector": "^22.3.0",
