@@ -12,8 +12,7 @@
     "format": "prettier --write ./src/**/*",
     "csssort": "postcss ./src/**/*.scss --replace --config package.json --no-map",
     "cssprefix": "postcss ./dist/**/*.css --replace --use autoprefixer --config package.json --no-map",
-    "prod": "npm run lint && npm run csssort && npm run build && npm run cssprefix",
-    "prepare": "husky install"
+    "prod": "npm run lint && npm run csssort && npm run build && npm run cssprefix"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
@@ -30,8 +29,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "postcss-scss": "^4.0.5",
