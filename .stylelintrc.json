@@ -1,0 +1,12 @@
+{
+  "_comment": ["https://stylelint.io/user-guide/get-started", "https://github.com/bjankord/stylelint-config-sass-guidelines", "https://medium.com/@bjankord/how-to-lint-scss-with-stylelint-dc87809a9878", "https://actionauta.com/notes/integrating-tailwind-css-modules-sass-stylelint-nextjs"],
+  "extends": ["stylelint-config-recommended-scss", "stylelint-config-sass-guidelines"],
+  "plugins": ["stylelint-order", "stylelint-scss"],
+  "rules": {
+    "order/properties-alphabetical-order": null,
+    "scss/at-rule-no-unknown": null,
+    "scss/at-import-no-partial-leading-underscore": null,
+
+    "selector-class-pattern": null
+  }
+}
