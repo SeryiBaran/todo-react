@@ -39,9 +39,7 @@ export const Controls = () => {
         onChange={evt => setInputValue(evt.target.value)}
         className=""
       />
-      <Button type="submit" className="">
-        Добавить
-      </Button>
+      <Button type="submit">Добавить</Button>
     </Form>
   );
 };

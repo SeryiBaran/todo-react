@@ -4,7 +4,7 @@ import { $todos, ITodo } from '@/store';
 
 import { TodoItem } from '@/components/TodoItem';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 export const TodoList = () => {
   const todos = useStore($todos);

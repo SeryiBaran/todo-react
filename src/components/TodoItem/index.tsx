@@ -5,7 +5,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 
 import { todoRemoved, todoEdited, ITodo } from '@/store';
 
-import styles from './index.module.scss';
+import styles from './index.module.css';
 
 interface ITodoItem {
   todo: ITodo;
