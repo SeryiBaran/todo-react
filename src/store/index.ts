@@ -1,7 +1,7 @@
 import { createStore, createEvent, createEffect, sample } from 'effector';
 import { persist } from 'effector-storage/local';
 
-import { generateId, searchTodoById, deepClone } from '@/utils';
+import { generateId } from '@/utils';
 
 export interface Todo {
   id: string;
@@ -36,12 +36,9 @@ const onTodoEdited = (
   state: TodosStore,
   { id, content }: { id: Todo['id']; content: Todo['content'] },
 ) => {
-  const copy = deepClone(state);
-
-  const index = searchTodoById(copy, id);
-  copy[index].content = content;
-
-  return copy;
+  return state.map(todo => {
+    if (todo.id === id) return { ...todo, content };
+  });
 };
 
 // ----------<Эффекты>----------

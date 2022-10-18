@@ -30,7 +30,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
-    "lodash.clonedeep": "^4.5.0",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "prettier": "^2.7.1",
