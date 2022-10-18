@@ -23,9 +23,7 @@ persist({ store: $todos, key: 'todos' });
 // ----------<Обработчики событий>----------
 
 // При добавлении todo (передается todo)
-const onTodoAdded = (state: TodosStore, todo: Todo) => {
-  return [...state, todo];
-};
+const onTodoAdded = (state: TodosStore, todo: Todo) => [...state, todo];
 
 // При удалении todo (передаётся id)
 const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
@@ -35,10 +33,7 @@ const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
 const onTodoEdited = (
   state: TodosStore,
   { id, content }: { id: Todo['id']; content: Todo['content'] },
-) =>
-  state.map(todo => {
-    if (todo.id === id) return { ...todo, content };
-  });
+) => state.map(todo => (todo.id === id ? { ...todo, content } : todo));
 
 // ----------<Эффекты>----------
 
