@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep'
 import { v4 as uuidv4 } from 'uuid';
 
 import { Todo, TodosStore } from '@/store';
@@ -12,3 +13,6 @@ export const generateId = () => uuidv4();
 // Поиск индекса todo в массиве по значению id
 export const searchTodoById = (todoArray: TodosStore, id: Todo['id']) =>
   todoArray.findIndex((todo: Todo) => todo.id === id);
+
+// Копирование
+export const deepClone = cloneDeep;

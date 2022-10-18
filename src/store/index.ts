@@ -1,7 +1,7 @@
 import { createStore, createEvent, createEffect, sample } from 'effector';
 import { persist } from 'effector-storage/local';
 
-import { generateId, searchTodoById } from '@/utils';
+import { generateId, searchTodoById, deepClone } from '@/utils';
 
 export interface Todo {
   id: string;
@@ -24,7 +24,6 @@ persist({ store: $todos, key: 'todos' });
 
 // При добавлении todo (передается todo)
 const onTodoAdded = (state: TodosStore, todo: Todo) => {
-  console.log(state, todo);
   return [...state, todo];
 };
 
@@ -37,7 +36,7 @@ const onTodoEdited = (
   state: TodosStore,
   { id, content }: { id: Todo['id']; content: Todo['content'] },
 ) => {
-  const copy = [...state];
+  const copy = deepClone(state);
 
   const index = searchTodoById(copy, id);
   copy[index].content = content;
@@ -49,7 +48,6 @@ const onTodoEdited = (
 
 // Генерация id для нового todo (вынесено из обработчика ивента в эффект, дабы обработчик ивента был чистым)
 const createIDFx = createEffect((data: TodoWithoutID): Todo => {
-  console.log(data);
   return {
     id: generateId(),
     ...data,
