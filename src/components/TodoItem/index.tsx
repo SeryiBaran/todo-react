@@ -7,11 +7,11 @@ import { todoRemoved, todoEdited, Todo } from '@/store';
 
 import styles from './index.module.css';
 
-interface TodoItem {
+interface TodoItemProps {
   todo: Todo;
 }
 
-export const TodoItem = ({ todo }: TodoItem) => {
+export const TodoItem = ({ todo }: TodoItemProps) => {
   // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
