@@ -35,11 +35,10 @@ const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
 const onTodoEdited = (
   state: TodosStore,
   { id, content }: { id: Todo['id']; content: Todo['content'] },
-) => {
-  return state.map(todo => {
+) =>
+  state.map(todo => {
     if (todo.id === id) return { ...todo, content };
   });
-};
 
 // ----------<Эффекты>----------
 
