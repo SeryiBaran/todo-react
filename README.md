@@ -1,6 +1,6 @@
 # todo-react
 
-Как [todo-vanilla](https://github.com/SeryiBaran/todo-vanilla), только todo-react =)))
+Как [todo-vanilla](https://github.com/SeryiBaran/todo-vanilla), только React =)))
 
 ## Технологии:
 
@@ -8,4 +8,10 @@
 - [Bootstrap](http://getbootstrap.com/)
 - [React.js](https://reactjs.org/)
 - [Effector](https://effector.dev/)
-- [Sass/SCSS](https://sass-lang.com/)
+
+## Инструменты:
+
+- [Vite.js](https://vitejs.dev/)
+- [ESLint](https://eslint.org/)
+- [StyleLint](https://stylelint.io/)
+- [Prettier](https://prettier.io/)
