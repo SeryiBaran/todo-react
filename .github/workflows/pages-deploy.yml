@@ -1,46 +1,33 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy React project to GitHub Pages
-
+name: Deployment
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ['main']
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v1
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
+    - name: Install Packages
+      run: npm install
 
-      - name: Install project dependencies from lockfile
-        run: npm i
+    - name: Build page
+      run: npm run build
 
-        # Here magic comes
-      - name: Build project
-        run: npm run prod
-
-      - name: Upload builded project
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload only build folder
-          path: './dist/'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        publish_dir: ./dist
