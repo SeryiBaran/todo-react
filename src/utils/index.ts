@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ITodo, ITodosStore } from '@/store';
+import { Todo, TodosStore } from '@/store';
 
 // Проверка валидности содержимого для контента в todo
-export const todoContentIsValid = (content: ITodo['content']) =>
+export const todoContentIsValid = (content: Todo['content']) =>
   !!content.trim();
 
 // Генерация ID
 export const generateId = () => uuidv4();
 
 // Поиск индекса todo в массиве по значению id
-export const searchTodoById = (todoArray: ITodosStore, id: ITodo['id']) =>
-  todoArray.findIndex((todo: ITodo) => todo.id === id);
+export const searchTodoById = (todoArray: TodosStore, id: Todo['id']) =>
+  todoArray.findIndex((todo: Todo) => todo.id === id);

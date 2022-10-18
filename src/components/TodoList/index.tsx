@@ -1,6 +1,6 @@
 import { useStore } from 'effector-react';
 
-import { $todos, ITodo } from '@/store';
+import { $todos, Todo } from '@/store';
 
 import { TodoItem } from '@/components/TodoItem';
 
@@ -16,7 +16,7 @@ export const TodoList = () => {
       {todos.length > 0 ? (
         [...todos]
           .reverse()
-          .map((todo: ITodo) => <TodoItem key={todo.id} todo={todo} />)
+          .map((todo: Todo) => <TodoItem key={todo.id} todo={todo} />)
       ) : (
         <p>ToDo кончились</p>
       )}

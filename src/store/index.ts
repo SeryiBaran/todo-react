@@ -3,19 +3,19 @@ import { persist } from 'effector-storage/local';
 
 import { generateId, searchTodoById } from '@/utils';
 
-export interface ITodo {
+export interface Todo {
   id: string;
   content: string;
 }
 
-export type ITodosStore = ITodo[];
+export type TodosStore = Todo[];
 
-export type ITodoWithoutID = Omit<ITodo, 'id'>;
+export type TodoWithoutID = Omit<Todo, 'id'>;
 
 // Состояние по умолчанию
 export const defaultTodos = [];
 
-export const $todos = createStore<ITodosStore>(defaultTodos);
+export const $todos = createStore<TodosStore>(defaultTodos);
 
 // Автоматическая синхронизация списка todo с LocalStorage
 persist({ store: $todos, key: 'todos' });
@@ -23,19 +23,19 @@ persist({ store: $todos, key: 'todos' });
 // ----------<Обработчики событий>----------
 
 // При добавлении todo (передается todo)
-const onTodoAdded = (state: ITodosStore, todo: ITodo) => {
+const onTodoAdded = (state: TodosStore, todo: Todo) => {
   console.log(state, todo);
   return [...state, todo];
 };
 
 // При удалении todo (передаётся id)
-const onTodoRemoved = (state: ITodosStore, id: ITodo['id']) =>
-  state.filter((todo: ITodo) => todo.id !== id);
+const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
+  state.filter((todo: Todo) => todo.id !== id);
 
 // При изменении todo (передаётся id todo и новый контент)
 const onTodoEdited = (
-  state: ITodosStore,
-  { id, content }: { id: ITodo['id']; content: ITodo['content'] },
+  state: TodosStore,
+  { id, content }: { id: Todo['id']; content: Todo['content'] },
 ) => {
   const copy = [...state];
 
@@ -48,7 +48,7 @@ const onTodoEdited = (
 // ----------<Эффекты>----------
 
 // Генерация id для нового todo (вынесено из обработчика ивента в эффект, дабы обработчик ивента был чистым)
-const createIDFx = createEffect((data: ITodoWithoutID): ITodo => {
+const createIDFx = createEffect((data: TodoWithoutID): Todo => {
   console.log(data);
   return {
     id: generateId(),
@@ -59,9 +59,9 @@ const createIDFx = createEffect((data: ITodoWithoutID): ITodo => {
 // ----------<События>----------
 
 // Создание событий
-export const todoAdded = createEvent<ITodoWithoutID>();
-export const todoRemoved = createEvent<ITodo['id']>();
-export const todoEdited = createEvent<ITodo>();
+export const todoAdded = createEvent<TodoWithoutID>();
+export const todoRemoved = createEvent<Todo['id']>();
+export const todoEdited = createEvent<Todo>();
 export const resetted = createEvent();
 
 // ----------<Подключения и соединения>----------

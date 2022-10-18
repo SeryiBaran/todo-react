@@ -3,15 +3,15 @@ import { useUnit } from 'effector-react';
 
 import { Button, Card, Form } from 'react-bootstrap';
 
-import { todoRemoved, todoEdited, ITodo } from '@/store';
+import { todoRemoved, todoEdited, Todo } from '@/store';
 
 import styles from './index.module.css';
 
-interface ITodoItem {
-  todo: ITodo;
+interface TodoItem {
+  todo: Todo;
 }
 
-export const TodoItem = ({ todo }: ITodoItem) => {
+export const TodoItem = ({ todo }: TodoItem) => {
   // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
