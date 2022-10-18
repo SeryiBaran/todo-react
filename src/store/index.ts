@@ -1,16 +1,7 @@
-import { createStore, createEvent } from 'effector';
+import { createStore, createEvent, createEffect, sample } from 'effector';
 import { persist } from 'effector-storage/local';
 
 import { generateId, searchTodoById } from '@/utils';
-
-/*
-Схема (для тупеньких)
-
-{
-  id: "<UUID>",
-  content: "<CONTENT>",
-}
-*/
 
 export interface ITodo {
   id: string;
@@ -18,6 +9,8 @@ export interface ITodo {
 }
 
 export type ITodosStore = ITodo[];
+
+export type ITodoWithoutID = Omit<ITodo, 'id'>;
 
 // Состояние по умолчанию
 export const defaultTodos = [];
@@ -27,14 +20,19 @@ export const $todos = createStore<ITodosStore>(defaultTodos);
 // Автоматическая синхронизация списка todo с LocalStorage
 persist({ store: $todos, key: 'todos' });
 
-// Event Listener: при добавлении todo
-const onTodoAddedWithId = (state: ITodosStore, todo: ITodo) => [...state, todo];
+// ----------<Обработчики событий>----------
 
-// Event Listener: при удалении todo (передаётся id)
+// При добавлении todo (передается todo)
+const onTodoAdded = (state: ITodosStore, todo: ITodo) => {
+  console.log(state, todo);
+  return [...state, todo];
+};
+
+// При удалении todo (передаётся id)
 const onTodoRemoved = (state: ITodosStore, id: ITodo['id']) =>
   state.filter((todo: ITodo) => todo.id !== id);
 
-// Event Listener: при изменении todo (передаётся id todo и новый контент)
+// При изменении todo (передаётся id todo и новый контент)
 const onTodoEdited = (
   state: ITodosStore,
   { id, content }: { id: ITodo['id']; content: ITodo['content'] },
@@ -47,24 +45,39 @@ const onTodoEdited = (
   return copy;
 };
 
-// Prepend: генерация id для нового todo (вынесено из ивента onTodoAddedWithId)
-const prependTodoAddedWithId = (settings: Omit<ITodo, 'id'>): ITodo => ({
-  id: generateId(),
-  ...settings,
+// ----------<Эффекты>----------
+
+// Генерация id для нового todo (вынесено из обработчика ивента в эффект, дабы обработчик ивента был чистым)
+const createIDFx = createEffect((data: ITodoWithoutID): ITodo => {
+  console.log(data);
+  return {
+    id: generateId(),
+    ...data,
+  };
 });
 
-// Создание ивентов
-export const todoAddedWithId = createEvent<ITodo>();
+// ----------<События>----------
+
+// Создание событий
+export const todoAdded = createEvent<ITodoWithoutID>();
 export const todoRemoved = createEvent<ITodo['id']>();
 export const todoEdited = createEvent<ITodo>();
 export const resetted = createEvent();
 
-// Добавление prependTodoAddedWithId в todoAddedWithId
-export const todoAdded = todoAddedWithId.prepend(prependTodoAddedWithId);
+// ----------<Подключения и соединения>----------
 
-// Настройка обработчиков событий
+// Переадресация вызова ивента в эффект (с передачей аргументов)
+sample({
+  clock: todoAdded,
+  target: createIDFx,
+});
+
+// Настройка обработчиков
 $todos
-  .on(todoAddedWithId, onTodoAddedWithId)
+  // При завершении генерации ID, запускаем функцию добавления todo с аргументами из эффекта
+  .on(createIDFx.doneData, onTodoAdded)
+
+  // При вызове ивентов, запускаем их обработчики
   .on(todoRemoved, onTodoRemoved)
   .on(todoEdited, onTodoEdited)
   .reset(resetted);

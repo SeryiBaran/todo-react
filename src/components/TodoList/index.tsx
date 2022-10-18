@@ -13,7 +13,7 @@ export const TodoList = () => {
     <div className={styles.list}>
       {/*Использован rest оператор, дабы не мутировать состояние*/}
       {/*Использован метод .reverse, чтобы тудушки шли снизу вверх*/}
-      {!!todos ? (
+      {todos.length > 0 ? (
         [...todos]
           .reverse()
           .map((todo: ITodo) => <TodoItem key={todo.id} todo={todo} />)
