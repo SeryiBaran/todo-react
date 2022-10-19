@@ -30,10 +30,8 @@ const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
   state.filter((todo: Todo) => todo.id !== id);
 
 // При изменении todo (передаётся id todo и новый контент)
-const onTodoEdited = (
-  state: TodosStore,
-  { id, content }: { id: Todo['id']; content: Todo['content'] },
-) => state.map(todo => (todo.id === id ? { ...todo, content } : todo));
+const onTodoEdited = (state: TodosStore, { id, ...data }: Todo) =>
+  state.map(todo => (todo.id === id ? { ...todo, ...data } : todo));
 
 // ----------<Эффекты>----------
 

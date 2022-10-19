@@ -11,7 +11,6 @@ export const TodoList = () => {
 
   return (
     <div className={styles.list}>
-      {/*Использован rest оператор, дабы не мутировать состояние*/}
       {/*Использован метод .reverse, чтобы тудушки шли снизу вверх*/}
       {todos.length > 0 ? (
         [...todos]

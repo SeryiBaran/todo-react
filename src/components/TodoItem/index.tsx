@@ -3,6 +3,8 @@ import { useUnit } from 'effector-react';
 
 import { Button, Card, Form } from 'react-bootstrap';
 
+import { useInput } from '@/hooks';
+import { todoContentIsValid } from '@/utils';
 import { todoRemoved, todoEdited, Todo } from '@/store';
 
 import styles from './index.module.css';
@@ -12,18 +14,18 @@ interface Props {
 }
 
 export const TodoItem = ({ todo }: Props) => {
-  // "Переименование" событий в функции (чтобы было "setTodo(args)" вместо "todoEdited(args)")
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
 
   const [isEdited, setIsEdited] = useState(false);
-  const [textAreaValue, setTextAreaValue] = useState(todo.content);
 
-  // При нажатии кнопки "готово"
+  const [newContent, newContentInput] = useInput(todo.content);
+
   const saveTodo = () => {
-    // Переключение состояния "редактируется" и вызов ивента для сохранения
+    if (!todoContentIsValid(newContent)) return;
+
     setIsEdited(false);
-    setTodo({ id: todo.id, content: textAreaValue });
+    setTodo({ id: todo.id, content: newContent });
   };
 
   return (
@@ -41,11 +43,7 @@ export const TodoItem = ({ todo }: Props) => {
           </Button>
         </div>
         {isEdited ? (
-          <Form.Control
-            as="textarea"
-            value={textAreaValue}
-            onChange={evt => setTextAreaValue(evt.target.value)}
-          />
+          <Form.Control as="textarea" {...newContentInput} />
         ) : (
           <pre className={styles.contentPre}>{todo.content}</pre>
         )}
