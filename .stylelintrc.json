@@ -1,9 +1,7 @@
 {
   "extends": ["stylelint-config-recommended"],
-  "plugins": ["stylelint-order", "stylelint-prettier"],
+  "plugins": ["stylelint-prettier"],
   "rules": {
-    "order/properties-alphabetical-order": null,
-
     "selector-class-pattern": null
   },
   "ignoreFiles": [
