@@ -1,16 +1,16 @@
 import * as idb from 'idb-keyval';
 
 const storage = {
-  getItem: async function (key) {
+  getItem: async function (key: string) {
     return idb.get(key);
   },
-  setItem: async function (key, val) {
+  setItem: async function (key: string, val: any) {
     await idb.set(key, val);
   },
 };
 
 // Адаптер IDB для effector-storage
-export const IDBAdapter = key => ({
-  get: async value => (await storage.getItem(key)) || value,
-  set: async value => storage.setItem(key, value),
+export const IDBAdapter = (key: string) => ({
+  get: async (value: any) => (await storage.getItem(key)) || value,
+  set: async (value: any) => storage.setItem(key, value),
 });
