@@ -1,7 +1,9 @@
 import { createStore, createEvent, createEffect, sample } from 'effector';
-import { persist } from 'effector-storage/local';
+import { persist } from 'effector-storage';
 
 import { generateId } from '@/utils';
+
+import { IDBAdapter } from './idbStorage';
 
 export interface Todo {
   id: string;
@@ -17,8 +19,15 @@ export const defaultTodos = [];
 
 export const $todos = createStore<TodosStore>(defaultTodos);
 
+// Автоматическая синхронизация списка todo с IndexedDB
+persist({
+  store: $todos,
+  adapter: IDBAdapter,
+  key: 'todos',
+});
+
 // Автоматическая синхронизация списка todo с LocalStorage
-persist({ store: $todos, key: 'todos' });
+// persist({ store: $todos, key: 'todos' });
 
 // ----------<Обработчики событий>----------
 
