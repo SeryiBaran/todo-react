@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useUnit } from 'effector-react';
+
 import { Button, Card, Form } from 'react-bootstrap';
+
 import { useInput } from '@/hooks';
 import { todoContentIsValid } from '@/utils';
-import { useTodosStore, Todo } from '@/store';
+import { todoRemoved, todoEdited, Todo } from '@/store';
 
 import styles from './index.module.css';
 
@@ -11,7 +14,8 @@ interface Props {
 }
 
 export const TodoItem = ({ todo }: Props) => {
-  const [, dispatch, { setTodo, removeTodo }] = useTodosStore();
+  const removeTodo = useUnit(todoRemoved);
+  const setTodo = useUnit(todoEdited);
 
   const [isEdited, setIsEdited] = useState(false);
 
@@ -21,17 +25,14 @@ export const TodoItem = ({ todo }: Props) => {
     if (!todoContentIsValid(newContent)) return;
 
     setIsEdited(false);
-    dispatch(setTodo({ id: todo.id, content: newContent }));
+    setTodo({ id: todo.id, content: newContent });
   };
 
   return (
     <Card className="bg-light">
       <Card.Body className="d-grid gap-2">
         <div className="d-grid gap-2">
-          <Button
-            variant="danger"
-            onClick={() => dispatch(removeTodo(todo.id))}
-          >
+          <Button variant="danger" onClick={() => removeTodo(todo.id)}>
             Завершено
           </Button>
           <Button

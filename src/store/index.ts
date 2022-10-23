@@ -1,82 +1,79 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
-import { useSelector, useDispatch } from 'react-redux';
-import { combineReducers } from 'redux';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { createStore, createEvent, createEffect, sample } from 'effector';
+import { persist } from 'effector-storage';
+
 import { generateId } from '@/utils';
+
+import { IDBAdapter } from './idbStorage';
 
 export interface Todo {
   id: string;
   content: string;
 }
+
 export type TodosStore = Todo[];
+
 export type TodoWithoutID = Omit<Todo, 'id'>;
 
+// Состояние по умолчанию
 export const defaultTodos = [];
 
-export const todosSlice = createSlice({
-  name: 'todos',
-  initialState: defaultTodos,
-  reducers: {
-    createTodo(
-      state: TodosStore,
-      { payload: data }: { payload: TodoWithoutID },
-    ) {
-      state.push({ id: generateId(), ...data });
-    },
-    setTodo(
-      state: TodosStore,
-      { payload: { id, ...data } }: { payload: Todo },
-    ) {
-      return state.map(todo => (todo.id === id ? { ...todo, ...data } : todo));
-    },
-    removeTodo(state: TodosStore, { payload: id }: Todo['id']) {
-      return state.filter((todo: Todo) => todo.id !== id);
-    },
-  },
+export const $todos = createStore<TodosStore>(defaultTodos);
+
+// Автоматическая синхронизация списка todo с IndexedDB
+persist({
+  store: $todos,
+  adapter: IDBAdapter,
+  key: 'todos',
 });
 
-const rootReducer = combineReducers({
-  todos: todosSlice.reducer,
+// Автоматическая синхронизация списка todo с LocalStorage
+// persist({ store: $todos, key: 'todos' });
+
+// ----------<Обработчики событий>----------
+
+// При добавлении todo (передается todo)
+const onTodoAdded = (state: TodosStore, todo: Todo) => [...state, todo];
+
+// При удалении todo (передаётся id)
+const onTodoRemoved = (state: TodosStore, id: Todo['id']) =>
+  state.filter((todo: Todo) => todo.id !== id);
+
+// При изменении todo (передаётся id todo и новый контент)
+const onTodoEdited = (state: TodosStore, { id, ...data }: Todo) =>
+  state.map(todo => (todo.id === id ? { ...todo, ...data } : todo));
+
+// ----------<Эффекты>----------
+
+// Генерация id для нового todo (вынесено из обработчика ивента в эффект, дабы обработчик ивента был чистым)
+const createIDFx = createEffect((data: TodoWithoutID): Todo => {
+  return {
+    id: generateId(),
+    ...data,
+  };
 });
 
-const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage,
-};
+// ----------<События>----------
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// Создание событий
+export const todoAdded = createEvent<TodoWithoutID>();
+export const todoRemoved = createEvent<Todo['id']>();
+export const todoEdited = createEvent<Todo>();
+export const resetted = createEvent();
 
-export const store = configureStore({
-  reducer: persistedReducer,
-  devTools: process.env.NODE_ENV !== 'production',
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+// ----------<Подключения и соединения>----------
+
+// Переадресация вызова ивента в эффект (с передачей аргументов)
+sample({
+  clock: todoAdded,
+  target: createIDFx,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// Настройка обработчиков
+$todos
+  // При завершении генерации ID, запускаем функцию добавления todo с аргументами из эффекта
+  .on(createIDFx.doneData, onTodoAdded)
 
-export const persistor = persistStore(store);
-
-export const useTodosStore = () => {
-  const state = useSelector((state: RootState) => state.todos);
-  const dispatch: AppDispatch = useDispatch();
-  const actions = todosSlice.actions;
-
-  return [state, dispatch, actions];
-};
+  // При вызове ивентов, запускаем их обработчики
+  .on(todoRemoved, onTodoRemoved)
+  .on(todoEdited, onTodoEdited)
+  .reset(resetted);
