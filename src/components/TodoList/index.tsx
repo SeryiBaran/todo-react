@@ -1,13 +1,11 @@
-import { useStore } from 'effector-react';
-
-import { $todos, Todo } from '@/store';
+import { useTodosStore, Todo } from '@/store';
 
 import { TodoItem } from '@/components/TodoItem';
 
 import styles from './index.module.css';
 
 export const TodoList = () => {
-  const todos = useStore($todos);
+  const [todos] = useTodosStore();
 
   return (
     <div className={styles.list}>

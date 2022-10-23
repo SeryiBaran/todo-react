@@ -1,14 +1,11 @@
 import React from 'react';
-import { useUnit } from 'effector-react';
-
 import { Button, Form } from 'react-bootstrap';
-
 import { useInput } from '@/hooks';
 import { todoContentIsValid } from '@/utils';
-import { todoAdded } from '@/store';
+import { useTodosStore } from '@/store';
 
 export const Controls = () => {
-  const addTodo = useUnit(todoAdded);
+  const [, dispatch, { createTodo }] = useTodosStore();
 
   const [content, input, resetInputValue] = useInput();
 
@@ -17,7 +14,7 @@ export const Controls = () => {
 
     if (!todoContentIsValid(content)) return;
 
-    addTodo({ content });
+    dispatch(createTodo({ content }));
     resetInputValue();
   };
 
