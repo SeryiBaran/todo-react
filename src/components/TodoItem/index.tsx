@@ -17,15 +17,19 @@ export const TodoItem = ({ todo }: Props) => {
   const removeTodo = useUnit(todoRemoved);
   const setTodo = useUnit(todoEdited);
 
-  const [isEdited, setIsEdited] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   const [newContent, newContentInput] = useInput(todo.content);
 
-  const saveTodo = () => {
+  const handleSaveTodo = () => {
     if (!todoContentIsValid(newContent)) return;
 
-    setIsEdited(false);
+    setIsEdit(false);
     setTodo({ id: todo.id, content: newContent });
+  };
+
+  const handleEditTodo = () => {
+    setIsEdit(true);
   };
 
   return (
@@ -36,13 +40,13 @@ export const TodoItem = ({ todo }: Props) => {
             Завершено
           </Button>
           <Button
-            onClick={() => setIsEdited(true)}
-            {...(!!isEdited && { variant: 'success', onClick: saveTodo })}
+            onClick={isEdit ? handleSaveTodo : handleEditTodo}
+            {...(isEdit && { variant: 'success' })}
           >
-            {isEdited ? 'Готово' : 'Изменить'}
+            {isEdit ? 'Готово' : 'Изменить'}
           </Button>
         </div>
-        {isEdited ? (
+        {isEdit ? (
           <Form.Control as="textarea" {...newContentInput} />
         ) : (
           <pre className={styles.contentPre}>{todo.content}</pre>
